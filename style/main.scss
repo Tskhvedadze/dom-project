@@ -1,0 +1,83 @@
+@import './abstratcs/variables';
+
+@import './base/base';
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+
+    &__aside {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background-color: $primary-color;
+        padding: 2rem;
+
+        &--title {
+            font-size: 3rem;
+            letter-spacing: 0.2rem;
+            color: $color--white;
+            margin-bottom: 1.2rem;
+        }
+
+        &--content {
+            display: inherit;
+            justify-content: space-between;
+            color: $color--white;
+            font-size: 1.6rem;
+            margin-top: 2rem;
+        }
+
+        .results__box,
+        .scores__box {
+            display: flex;
+            flex-direction: column;
+            h4,
+            p {
+                margin-bottom: 1.2rem;
+            }
+        }
+    }
+
+    &__section {
+        height: 100vh;
+        background-color: $secondary-color;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+
+        &--header {
+            display: flex;
+            justify-content: space-between;
+            background-color: $color--white-2;
+            padding: 2.5rem;
+            border-radius: 8px 8px 0 0;
+
+            h2 {
+                color: $primary-color;
+                font-size: 2rem;
+            }
+
+            .btn {
+                appearance: none;
+                border: none;
+                font-family: inherit;
+                font-size: 1.5rem;
+                background-color: $color--blue;
+                color: $color--white;
+                padding: 0.7rem;
+                border-radius: 6px;
+
+                &--add {
+                    margin-right: 0.5rem;
+                }
+
+                &:hover {
+                    background-color: $color--black;
+                }
+            }
+        }
+        &__table {
+        }
+    }
+}

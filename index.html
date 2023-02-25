@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Table</title>
+
+        <!-- fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&family=Space+Mono:wght@700&display=swap"
+            rel="stylesheet"
+        />
+        <!-- style -->
+        <link rel="stylesheet" href="/style/main.css" />
+
+        <!-- script -->
+        <script src="/script/script.js" defer></script>
+    </head>
+    <body>
+        <main class="main">
+            <aside class="main__aside">
+                <h1 class="main__aside--title">Statistic of Student Results</h1>
+                <div class="main__aside--content">
+                    <div class="results__box">
+                        <h4>Total Days</h4>
+                        <h4>Missed Lesson</h4>
+                        <h4>Average mark</h4>
+                        <h4>Total Students</h4>
+                    </div>
+                    <div class="scores__box">
+                        <p id="num-days">4</p>
+                        <p id="missed-days">60</p>
+                        <p id="average-score">0.00</p>
+                        <p id="total-students">15</p>
+                    </div>
+                </div>
+            </aside>
+            <section class="main__section">
+                <div>
+                    <header class="main__section--header">
+                        <h2>Table</h2>
+                        <div>
+                            <button id="add-day" class="btn btn--add">
+                                Add Day
+                            </button>
+                            <button id="remove-day" class="btn">
+                                Remove Day
+                            </button>
+                        </div>
+                    </header>
+                </div>
+                <div class="main__section__table" id="main"></div>
+            </section>
+        </main>
+    </body>
+</html>
