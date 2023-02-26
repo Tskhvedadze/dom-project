@@ -5,12 +5,10 @@ const ADD_DAY_TABLE = document.getElementById('add-day-table-body')
 const ADD_GRADE_ROW = document.querySelectorAll('.add-grade-row')
 const ADD_BTN = document.getElementById('add-day')
 const REMOVE_BTN = document.getElementById('remove-day')
-let count = 0
+let daysAmount = 0
 
 ADD_BTN.addEventListener('click', function () {
-    count++
-
-    const newDay = new Date(INITIAL_DATE.getTime() + count * 86400000 * 2)
+    const newDay = new Date(INITIAL_DATE.getTime() + daysAmount * 86400000 * 2)
     const dateFormat = new Intl.DateTimeFormat('en-UK', {
         weekday: 'short',
         day: 'numeric',
@@ -24,10 +22,11 @@ ADD_BTN.addEventListener('click', function () {
 
     addNewColumn(ADD_GRADE_ROW)
     updateStatistics()
+    daysAmount++
 })
 
 REMOVE_BTN.addEventListener('click', function () {
-    if (count > 0) {
+    if (daysAmount > 0) {
         ADD_DAY_TABLE.lastChild.textContent = ''
         ADD_DAY_TABLE.removeChild(ADD_DAY_TABLE.lastChild)
         for (let i = 0; i < ADD_GRADE_ROW.length; i++) {
@@ -35,7 +34,7 @@ REMOVE_BTN.addEventListener('click', function () {
             element.lastChild.textContent = ''
             element.removeChild(element.lastChild)
         }
-        count--
+        daysAmount--
         updateStatistics()
     }
 })
@@ -88,20 +87,33 @@ function updateStatistics() {
 
     // const overallAverage = (totalGrade !== 0 && totalGrade / totalStudents) || 0
 
-    // document.getElementById('num-days').textContent = count
+    document.getElementById('num-days').textContent = daysAmount + 1
     // document.getElementById('missed-days').textContent = missedDays
     // document.getElementById('average-score').textContent = overallAverage
 }
 
 function getEachAverage() {
-    const childrenList = [...ADD_GRADE_ROW].map((el, i) => {
-        return el.children
-    })
+    const table = document.getElementById('myTable')
 
-    for (let i = 0; i < childrenList.length; i++) {
-        let [arr, averageScore, ...rest] = childrenList[i]
-        console.log(arr)
-        // rest.forEach((el) => console.log(el))
+    for (let i = 1; i < table.rows.length; i++) {
+        let row = table.rows[i]
+        let total = 0
+
+        for (let j = 2; j < row.cells.length; j++) {
+            let cell = row.cells[j]
+            let value = parseFloat(cell.innerHTML)
+
+            if (!isNaN(value)) {
+                total += value
+            }
+        }
+
+        let average = total / (row.cells.length - 2)
+        let newCell = row.children[1]
+
+        newCell.innerHTML = isNaN(average.toFixed(2))
+            ? '0.00'
+            : average.toFixed(2)
     }
 }
 
