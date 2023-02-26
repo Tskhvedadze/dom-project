@@ -157,4 +157,9 @@ tr:nth-child(even) td {
 
 tr:nth-child(odd) td {
   background-color: rgb(245, 245, 245);
+}
+
+.active {
+  background-color: #1d7874 !important;
+  color: #d2e4e3;
 }/*# sourceMappingURL=main.css.map */

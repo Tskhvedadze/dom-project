@@ -23,6 +23,7 @@ ADD_BTN.addEventListener('click', function () {
     addNewColumn(ADD_GRADE_ROW)
     updateStatistics()
     daysAmount++
+    document.getElementById('num-days').textContent = daysAmount
 })
 
 REMOVE_BTN.addEventListener('click', function () {
@@ -36,11 +37,11 @@ REMOVE_BTN.addEventListener('click', function () {
         }
         daysAmount--
         updateStatistics()
+        document.getElementById('num-days').textContent = daysAmount
     }
 })
 
 function updateStatistics() {
-    const totalStudents = 10
     const grades = document.querySelectorAll('#newGradeCell')
 
     const amountOfGrades = grades.length
@@ -55,41 +56,29 @@ function updateStatistics() {
     AVERAGE_TOTAL_SCORES.textContent = totalAverage
 
     getEachAverage()
+    getMissedDays()
+}
 
-    // const tableRows = document.querySelectorAll('#newGradeCell')
-    // const totalStudents = tableRows.length
-    // console.log(totalStudents)
+function getMissedDays() {
+    const days = document.getElementById('missed-days')
+    const cells = document.querySelectorAll('td')
+    const grades = document.querySelectorAll('#newGradeCell')
 
-    // let totalGrade = 0
-    // let missedDays = 0
+    let count = 0
+    for (let i = 2; i < cells.length; i++) {
+        if (cells[i].textContent === '0') {
+            count++
+        }
+    }
+    days.innerText = count
 
-    // tableRows.forEach((row) => {
-    //     let rowGrade = 0
-    //     let hasMissedDay = true
-
-    //     row.querySelectorAll('td:not(:first-child)').forEach((dayCell) => {
-    //         const grade = parseInt(dayCell.textContent) || 0
-    //         rowGrade += grade
-
-    //         if (grade > 0) {
-    //             hasMissedDay = false
-    //         }
-    //     })
-
-    //     if (hasMissedDay) {
-    //         missedDays++
-    //     }
-
-    //     const averageGrade = rowGrade / (count + 1)
-    //     row.querySelector('.average').textContent = averageGrade.toFixed(2)
-    //     totalGrade += averageGrade
-    // })
-
-    // const overallAverage = (totalGrade !== 0 && totalGrade / totalStudents) || 0
-
-    document.getElementById('num-days').textContent = daysAmount + 1
-    // document.getElementById('missed-days').textContent = missedDays
-    // document.getElementById('average-score').textContent = overallAverage
+    for (let i = 0; i < grades.length; i++) {
+        if (grades[i].textContent !== '0') {
+            grades[i].classList.add('active')
+        } else if (grades[i].textContent === '0') {
+            grades[i].classList.remove('active')
+        }
+    }
 }
 
 function getEachAverage() {

@@ -128,3 +128,8 @@ tr:nth-child(even) td {
 tr:nth-child(odd) td {
     background-color: $color--table-2;
 }
+
+.active {
+    background-color: $primary-color !important;
+    color: $color--white;
+}
