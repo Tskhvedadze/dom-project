@@ -48,7 +48,7 @@ body {
 
 .main {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 30rem auto;
   position: relative;
 }
 .main__aside {
@@ -83,7 +83,6 @@ body {
   margin-bottom: 1.2rem;
 }
 .main__section {
-  height: 100vh;
   background-color: #8ebcba;
   padding: 2rem;
   display: flex;
@@ -111,6 +110,7 @@ body {
   color: #d2e4e3;
   padding: 0.7rem;
   border-radius: 6px;
+  cursor: pointer;
 }
 .main__section--header .btn--add {
   margin-right: 0.5rem;
@@ -118,29 +118,37 @@ body {
 .main__section--header .btn:hover {
   background-color: #000;
 }
-
-table {
+.main .table {
   border-collapse: collapse;
   border: 1px solid #8ebcba;
   letter-spacing: 1px;
   font-size: 2rem;
-  width: 260px;
+  width: 26rem;
   table-layout: fixed;
 }
+.main .table--firstTh {
+  width: 18rem;
+}
+.main .table--secondTh {
+  width: 9rem;
+}
 
-td,
-th {
-  border: 1px solid rgb(190, 190, 190);
-  padding: 10px;
+th,
+td {
+  text-align: center;
+  border: 1px solid #d2e4e3;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+td:hover {
+  background-color: #1d7874 !important;
+  color: #d2e4e3;
 }
 
 th {
   background-color: rgb(235, 235, 235);
   width: 15rem;
-}
-
-td {
-  text-align: center;
 }
 
 tr:nth-child(even) td {

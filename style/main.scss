@@ -8,7 +8,7 @@ body {
 
 .main {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 30rem auto;
     position: relative;
 
     &__aside {
@@ -45,7 +45,6 @@ body {
     }
 
     &__section {
-        height: 100vh;
         background-color: $secondary-color;
         padding: 2rem;
         display: flex;
@@ -72,6 +71,7 @@ body {
                 color: $color--white;
                 padding: 0.7rem;
                 border-radius: 6px;
+                cursor: pointer;
 
                 &--add {
                     margin-right: 0.5rem;
@@ -83,21 +83,37 @@ body {
             }
         }
     }
+
+    .table {
+        border-collapse: collapse;
+        border: 1px solid $secondary-color;
+        letter-spacing: 1px;
+        font-size: 2rem;
+        width: 26rem;
+        table-layout: fixed;
+
+        &--firstTh {
+            width: 18rem;
+        }
+
+        &--secondTh {
+            width: 9rem;
+        }
+    }
 }
 
-table {
-    border-collapse: collapse;
-    border: 1px solid $secondary-color;
-    letter-spacing: 1px;
-    font-size: 2rem;
-    width: 260px;
-    table-layout: fixed;
+// Tables rows and columns
+th,
+td {
+    text-align: center;
+    border: 1px solid $color--white;
+    padding: 1rem;
+    cursor: pointer;
 }
 
-td,
-th {
-    border: 1px solid rgb(190, 190, 190);
-    padding: 10px;
+td:hover {
+    background-color: $primary-color !important;
+    color: $color--white;
 }
 
 th {
@@ -105,14 +121,10 @@ th {
     width: 15rem;
 }
 
-td {
-    text-align: center;
-}
-
 tr:nth-child(even) td {
-    background-color: rgb(250, 250, 250);
+    background-color: $color--table-1;
 }
 
 tr:nth-child(odd) td {
-    background-color: rgb(245, 245, 245);
+    background-color: $color--table-2;
 }
