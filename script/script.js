@@ -1,96 +1,130 @@
-const firstLectureDate = new Date('December 5, 2022')
+const INITIAL_DATE = new Date('December 5, 2022')
 
-const addDayTableBody = document.getElementById('add-day-table-body')
-const addGradeRow = document.querySelectorAll('.add-grade-row')
-const addDayButton = document.getElementById('add-day')
-const removeDayButton = document.getElementById('remove-day')
+const AVERAGE_TOTAL_SCORES = document.getElementById('average-score')
+const ADD_DAY_TABLE = document.getElementById('add-day-table-body')
+const ADD_GRADE_ROW = document.querySelectorAll('.add-grade-row')
+const ADD_BTN = document.getElementById('add-day')
+const REMOVE_BTN = document.getElementById('remove-day')
 let count = 0
 
-console.log(addGradeRow)
-
-addDayButton.addEventListener('click', function () {
+ADD_BTN.addEventListener('click', function () {
     count++
-    const newDayDate = new Date(
-        firstLectureDate.getTime() + count * 86400000 * 2,
-    )
 
+    const newDay = new Date(INITIAL_DATE.getTime() + count * 86400000 * 2)
     const dateFormat = new Intl.DateTimeFormat('en-UK', {
         weekday: 'short',
         day: 'numeric',
         month: 'short',
-    }).format(newDayDate)
+    }).format(newDay)
 
-    const newDateCell = document.createElement('th')
-    const newDayOfWeekCell = document.createElement('td')
-    newDateCell.textContent = dateFormat
+    const th = document.createElement('th')
+    th.textContent = dateFormat
 
-    addDayTableBody.appendChild(newDateCell)
+    ADD_DAY_TABLE.appendChild(th)
 
-    for (let i = 0; i < addGradeRow.length; i++) {
-        let newCell = document.createElement('td')
-        newCell.setAttribute('id', 'newGradeCell')
-        newCell.textContent = 0
-        addGradeRow[i].appendChild(newCell)
-    }
-
-    const newGradeCell = document.querySelectorAll('#newGradeCell')
-
-    for (var i = 0; i < newGradeCell.length; i++) {
-        newGradeCell[i].onclick = function () {
-            // add your onclick code here
-            console.log('Cell clicked!')
-        }
-    }
-
+    addNewColumn(ADD_GRADE_ROW)
     updateStatistics()
 })
 
-removeDayButton.addEventListener('click', function () {
+REMOVE_BTN.addEventListener('click', function () {
     if (count > 0) {
-        addDayTableBody.lastChild.textContent = ''
-        addDayTableBody.removeChild(addDayTableBody.lastChild)
-        for (let i = 0; i < addGradeRow.length; i++) {
-            const element = addGradeRow[i]
+        ADD_DAY_TABLE.lastChild.textContent = ''
+        ADD_DAY_TABLE.removeChild(ADD_DAY_TABLE.lastChild)
+        for (let i = 0; i < ADD_GRADE_ROW.length; i++) {
+            const element = ADD_GRADE_ROW[i]
             element.lastChild.textContent = ''
             element.removeChild(element.lastChild)
         }
         count--
         updateStatistics()
     }
-
-    let lastChild = this.parentNode.lastChild
 })
 
 function updateStatistics() {
-    const tableRows = document.querySelectorAll('#grades-table tbody tr')
-    const totalStudents = tableRows.length
-    let totalGrade = 0
-    let missedDays = 0
+    const totalStudents = 10
+    const grades = document.querySelectorAll('#newGradeCell')
 
-    tableRows.forEach((row) => {
-        let rowGrade = 0
-        let hasMissedDay = true
+    const amountOfGrades = grades.length
+    const totalGrades = [...grades].reduce(
+        (acc, cur) => acc + Number(cur.innerHTML),
+        0,
+    )
 
-        row.querySelectorAll('td:not(:first-child)').forEach((dayCell) => {
-            const grade = parseInt(dayCell.textContent) || 0
-            rowGrade += grade
+    const totalAverage = amountOfGrades
+        ? (totalGrades / amountOfGrades).toFixed(2)
+        : '0.00'
+    AVERAGE_TOTAL_SCORES.textContent = totalAverage
 
-            if (grade > 0) {
-                hasMissedDay = false
-            }
-        })
+    getEachAverage()
 
-        if (hasMissedDay) {
-            missedDays++
-        }
+    // const tableRows = document.querySelectorAll('#newGradeCell')
+    // const totalStudents = tableRows.length
+    // console.log(totalStudents)
 
-        const averageGrade = rowGrade / (count + 1)
-        row.querySelector('.average').textContent = averageGrade.toFixed(2)
-        totalGrade += averageGrade
+    // let totalGrade = 0
+    // let missedDays = 0
+
+    // tableRows.forEach((row) => {
+    //     let rowGrade = 0
+    //     let hasMissedDay = true
+
+    //     row.querySelectorAll('td:not(:first-child)').forEach((dayCell) => {
+    //         const grade = parseInt(dayCell.textContent) || 0
+    //         rowGrade += grade
+
+    //         if (grade > 0) {
+    //             hasMissedDay = false
+    //         }
+    //     })
+
+    //     if (hasMissedDay) {
+    //         missedDays++
+    //     }
+
+    //     const averageGrade = rowGrade / (count + 1)
+    //     row.querySelector('.average').textContent = averageGrade.toFixed(2)
+    //     totalGrade += averageGrade
+    // })
+
+    // const overallAverage = (totalGrade !== 0 && totalGrade / totalStudents) || 0
+
+    // document.getElementById('num-days').textContent = count
+    // document.getElementById('missed-days').textContent = missedDays
+    // document.getElementById('average-score').textContent = overallAverage
+}
+
+function getEachAverage() {
+    const childrenList = [...ADD_GRADE_ROW].map((el, i) => {
+        return el.children
     })
 
-    const overallAverage = totalGrade / totalStudents
-    document.getElementById('num-days').textContent = count + 1
-    document.getElementById('missed-days').textContent = missedDays
-    document.getElementById('average-score').textContent = overallAverage
+    for (let i = 0; i < childrenList.length; i++) {
+        let [arr, averageScore, ...rest] = childrenList[i]
+        console.log(arr)
+        // rest.forEach((el) => console.log(el))
+    }
+}
+
+// add new Column
+function addNewColumn(element) {
+    for (let i = 0; i < element.length; i++) {
+        let td = document.createElement('td')
+        td.setAttribute('id', 'newGradeCell')
+        td.textContent = 0
+        element[i].appendChild(td)
+
+        const newGradeCell = document.querySelectorAll('#newGradeCell')
+        addListener(newGradeCell)
+    }
+}
+
+function addListener(element) {
+    for (let i = 0; i < element.length; i++) {
+        element[i].onclick = function () {
+            const userInput = parseInt(prompt('Enter grade', 0))
+            this.textContent =
+                isNaN(userInput) || !(userInput <= 5) ? 0 : userInput
+            updateStatistics()
+        }
+    }
 }
