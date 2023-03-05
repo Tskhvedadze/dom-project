@@ -6,20 +6,31 @@ const ADD_GRADE_ROW = document.querySelectorAll('.add-grade-row')
 const ADD_BTN = document.getElementById('add-day')
 const REMOVE_BTN = document.getElementById('remove-day')
 let daysAmount = 0
+let dayOfWeek = 1
 
 ADD_BTN.addEventListener('click', function () {
-    const newDay = new Date(INITIAL_DATE.getTime() + daysAmount * 86400000 * 2)
+    let days = new Date(INITIAL_DATE.getTime() + daysAmount * 86400000)
+
+    while (days.getDay() !== dayOfWeek) {
+        days = new Date(days.getTime() + 1 * 86400000)
+    }
+    if (dayOfWeek === 5) {
+        dayOfWeek = 1
+    } else if (dayOfWeek === 1 || dayOfWeek === 3) {
+        dayOfWeek += 2
+    } else {
+        dayOfWeek++
+    }
+
     const dateFormat = new Intl.DateTimeFormat('en-UK', {
         weekday: 'short',
         day: 'numeric',
         month: 'short',
-    }).format(newDay)
+    }).format(days)
 
     const th = document.createElement('th')
     th.textContent = dateFormat
-
     ADD_DAY_TABLE.appendChild(th)
-
     addNewColumn(ADD_GRADE_ROW)
     updateStatistics()
     daysAmount++
